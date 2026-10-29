@@ -201,7 +201,10 @@
     error.hidden = !message;
   }
 
-  /** POST /api/citas con los campos del formulario; el backend responde 201 o 400 con `message`. */
+  /**
+   * POST /api/citas/solicitud-web (pública, sin token) con los campos del formulario.
+   * El backend responde 201 con `message`, o 400 con `message` y `fields` (error por campo).
+   */
   async function enviarCita(dialog, form, button) {
     const datos = Object.fromEntries(new FormData(form));
     setModalError(dialog, '');
@@ -209,7 +212,7 @@
     button.setAttribute('aria-busy', 'true');
 
     try {
-      const response = await fetch(`${API_URL}/citas`, {
+      const response = await fetch(`${API_URL}/citas/solicitud-web`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datos),
